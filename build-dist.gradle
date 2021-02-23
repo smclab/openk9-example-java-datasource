@@ -1,0 +1,22 @@
+
+apply plugin: 'java'
+
+configurations {
+	dist {
+		transitive = false
+		visible = false
+	}
+	distExternal {
+		transitive = false
+		visible = false
+	}
+}
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
+dependencies {
+	dist project(path: ':example-datasource', configuration: 'archives')
+}
