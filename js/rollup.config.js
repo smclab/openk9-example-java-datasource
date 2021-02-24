@@ -2,6 +2,9 @@ import path from "path";
 import babel from "@rollup/plugin-babel";
 import resolve from "@rollup/plugin-node-resolve";
 import json from "@rollup/plugin-json";
+import replace from "@rollup/plugin-replace";
+import commonjs from "@rollup/plugin-commonjs";
+import externalGlobals from "rollup-plugin-external-globals";
 import { terser } from "rollup-plugin-terser";
 
 const root = process.platform === "win32" ? path.resolve("/") : "/";
@@ -21,11 +24,17 @@ const getBabelOptions = ({ useESModules }, targets) => ({
   plugins: [["@babel/transform-runtime", { regenerator: false, useESModules }]],
 });
 
+const externalGlobalsDefault = {
+  react: "React",
+  "@openk9/http-api": "ok9API",
+  "@openk9/search-ui-components": "ok9Components",
+};
+
 export default [
   {
-    input: `./src/index.ts`,
+    input: `./src/index.tsx`,
     output: { file: `build/index.js`, format: "esm" },
-    external,
+    external: Object.keys(externalGlobalsDefault),
     plugins: [
       json(),
       babel(
@@ -35,17 +44,27 @@ export default [
         ),
       ),
       resolve({ extensions }),
+      commonjs(),
+      externalGlobals(externalGlobalsDefault),
+      replace({
+        "process.env.NODE_ENV": JSON.stringify("production"),
+      }),
       terser(),
     ],
   },
   {
-    input: `./src/index.ts`,
+    input: `./src/index.tsx`,
     output: { file: `build/index.cjs.js`, format: "cjs" },
-    external,
+    external: Object.keys(externalGlobalsDefault),
     plugins: [
       json(),
       babel(getBabelOptions({ useESModules: false })),
       resolve({ extensions }),
+      commonjs(),
+      externalGlobals(externalGlobalsDefault),
+      replace({
+        "process.env.NODE_ENV": JSON.stringify("production"),
+      }),
       terser(),
     ],
   },
