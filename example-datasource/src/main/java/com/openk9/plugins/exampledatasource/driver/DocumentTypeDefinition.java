@@ -1,19 +1,20 @@
 package com.openk9.plugins.exampledatasource.driver;
 
-import it.rios.ingestion.driver.manager.api.DocumentType;
-import it.rios.ingestion.driver.manager.api.DocumentTypeFactory;
-import it.rios.ingestion.driver.manager.api.DocumentTypeFactoryRegistry;
-import it.rios.ingestion.driver.manager.api.DocumentTypeFactoryRegistryAware;
-import it.rios.ingestion.driver.manager.api.PluginDriver;
-import it.rios.ingestion.driver.manager.api.SearchKeyword;
-import it.rios.projectq.osgi.util.AutoCloseables;
-import it.rios.projectq.search.client.api.mapping.Field;
-import it.rios.projectq.search.client.api.mapping.FieldType;
+import com.openk9.ingestion.driver.manager.api.DocumentType;
+import com.openk9.ingestion.driver.manager.api.DocumentTypeFactory;
+import com.openk9.ingestion.driver.manager.api.DocumentTypeFactoryRegistry;
+import com.openk9.ingestion.driver.manager.api.DocumentTypeFactoryRegistryAware;
+import com.openk9.ingestion.driver.manager.api.PluginDriver;
+import com.openk9.ingestion.driver.manager.api.SearchKeyword;
+import com.openk9.osgi.util.AutoCloseables;
+import com.openk9.search.client.api.mapping.Field;
+import com.openk9.search.client.api.mapping.FieldType;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import static it.rios.projectq.common.api.collection.Collections.ofList;
-import static it.rios.projectq.common.api.collection.Collections.ofMap;
+import java.util.List;
+import java.util.Map;
+
 
 @Component(
 	immediate = true,
@@ -36,15 +37,17 @@ public class DocumentTypeDefinition implements
 						.builder()
 						.name(pluginDriverName)
 						.searchKeywords(
-							ofList(
+							List.of(
 								SearchKeyword.text("title", pluginDriverName),
-								SearchKeyword.boostText("applicationName", pluginDriverName, 10.0f),
+								SearchKeyword.boostText(
+									"applicationName", pluginDriverName, 10.0f),
 								SearchKeyword.text("URL", pluginDriverName),
-								SearchKeyword.text("description", pluginDriverName)
+								SearchKeyword.text(
+									"description", pluginDriverName)
 							)
 						)
 						.sourceFields(
-							ofList(
+							List.of(
 								Field.of("title", FieldType.TEXT),
 								Field.of("applicationName", FieldType.TEXT),
 								Field.of("URL", FieldType.TEXT),
@@ -52,7 +55,7 @@ public class DocumentTypeDefinition implements
 								Field.of(
 									"icon",
 									FieldType.TEXT,
-									ofMap("index", false)
+									Map.of("index", false)
 								)
 							)
 						)
@@ -61,7 +64,7 @@ public class DocumentTypeDefinition implements
 	}
 
 	@Reference(
-		target = "(component.name=it.rios.projectq.plugins.applications.driver.ExamplePluginDriver)"
+		target = "(component.name=com.openk9.plugins.exampledatasource.driver.ExamplePluginDriver)"
 	)
 	private PluginDriver _pluginDriver;
 

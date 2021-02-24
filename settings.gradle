@@ -5,7 +5,7 @@ pluginManagement {
 	}
 }
 
-rootProject.name = 'project-q'
+rootProject.name = 'example-datasource'
 
 import static groovy.io.FileVisitResult.*
 import static groovy.io.FileType.*

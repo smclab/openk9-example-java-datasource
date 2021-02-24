@@ -1,12 +1,12 @@
 package com.openk9.plugins.exampledatasource.driver;
 
-import it.rios.ingestion.driver.manager.api.PluginDriver;
-import it.rios.projectq.datasource.model.Datasource;
-import it.rios.projectq.ingestion.logic.api.IngestionLogic;
-import it.rios.projectq.json.api.ArrayNode;
-import it.rios.projectq.json.api.JsonFactory;
-import it.rios.projectq.json.api.JsonNode;
-import it.rios.projectq.model.IngestionPayload;
+import com.openk9.datasource.model.Datasource;
+import com.openk9.ingestion.driver.manager.api.PluginDriver;
+import com.openk9.ingestion.logic.api.IngestionLogic;
+import com.openk9.json.api.ArrayNode;
+import com.openk9.json.api.JsonFactory;
+import com.openk9.json.api.JsonNode;
+import com.openk9.model.IngestionPayload;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -54,12 +54,6 @@ public class ExamplePluginDriver implements PluginDriver {
 			for (int i = 0; i < arrayJson.size(); i++) {
 
 				JsonNode node = arrayJson.get(i);
-
-				if (node.hasNonNull("title")) {
-					node = node
-						.toObjectNode()
-						.set("applicationName", node.get("title"));
-				}
 
 				_ingestionLogicSender.send(
 					IngestionPayload

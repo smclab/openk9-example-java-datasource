@@ -1,2 +1,27 @@
+buildscript {
+	repositories {
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+	dependencies {
+		classpath "biz.aQute.bnd:biz.aQute.bnd.gradle:5.2.0"
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'biz.aQute.bnd.builder'
+
+apply from: "$rootDir/build-publishing.gradle"
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
 dependencies {
+	compile 'com.openk9:com.openk9.release.api:0.0.1'
 }
