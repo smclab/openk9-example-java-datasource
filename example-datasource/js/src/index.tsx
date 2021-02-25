@@ -20,15 +20,22 @@ export const pluginInfo: PluginInfo = {
   },
 };
 
-function iconRenderer() {
+function iconRenderer(props: any) {
+  console.log("iconRenderer", props);
   return <ClayIcon symbol="document" />;
 }
 
-function settingsRenderer() {
-  return null;
+function settingsRenderer(props: any) {
+  console.log("settingsRenderer", props);
+  return (
+    <>
+      <h1>Settings Panel</h1>
+    </>
+  );
 }
 
-function exampleResultRenderer() {
+function exampleResultRenderer(props: any) {
+  console.log("exampleResultRenderer", props);
   return (
     <>
       <h1>It Works!</h1>
@@ -36,6 +43,7 @@ function exampleResultRenderer() {
   );
 }
 
-function exampleSidebarRenderer() {
+function exampleSidebarRenderer(props: any) {
+  console.log("exampleSidebarRenderer", props);
   return null;
 }
