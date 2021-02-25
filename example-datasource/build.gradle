@@ -6,6 +6,7 @@ buildscript {
 	}
 	dependencies {
 		classpath "biz.aQute.bnd:biz.aQute.bnd.gradle:5.2.0"
+		classpath "com.github.node-gradle:gradle-node-plugin:3.0.1"
 	}
 }
 
@@ -25,3 +26,32 @@ repositories {
 dependencies {
 	compile 'com.openk9:com.openk9.release.api:0.0.1'
 }
+
+apply plugin: 'com.github.node-gradle.node'
+node {
+	nodeProjectDir = file("${project.projectDir}/js")
+	download = true
+}
+
+task installDeps(type: YarnTask) {
+    args = ['install']
+}
+
+task buildJS(type: YarnTask) {
+    dependsOn installDeps
+    args = ['build']
+}
+
+task copyJS(type: Copy) {
+    dependsOn buildJS
+    from 'js/build'
+    into 'src/main/resources/build'
+}
+build.dependsOn(copyJS)
+
+task cleanJS(type: Delete) {
+	delete("${project.projectDir}/js/build")
+	delete("${project.projectDir}/js/node_modules")
+	delete("${project.projectDir}/src/main/resources/build")
+}
+clean.dependsOn(cleanJS)
