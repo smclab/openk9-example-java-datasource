@@ -45,36 +45,29 @@ public class ExamplePluginDriver implements PluginDriver {
 	public Publisher<Void> invokeDataParser(
 		Datasource datasource, Date fromDate, Date toDate) {
 
-		JsonNode jsonNode =
-			_jsonFactory.fromJsonToJsonNode(datasource.getJsonConfig());
+		for (int i = 0; i < 5; i++) {
+			String id = "example-" + i;
+			JsonNode data = _jsonFactory.createObjectNode()
+							.put("title", "Item " + i)
+							.put("description", "This is a test, you are looking for item number " + i);
 
-		if (jsonNode.isArray()) {
-			ArrayNode arrayJson = jsonNode.toArrayNode();
-
-			for (int i = 0; i < arrayJson.size(); i++) {
-
-				JsonNode node = arrayJson.get(i);
-
-				_ingestionLogicSender.send(
-					IngestionPayload
-						.builder()
-						.datasourceId(datasource.getDatasourceId())
-						.rawContent(node.toString())
-						.contentId(Integer.toString(i))
-						.tenantId(datasource.getTenantId())
-						.datasourcePayload(
-							_jsonFactory
-								.createObjectNode()
-								.set(getName(), node.toObjectNode())
-								.toMap()
-						)
-						.parsingDate(toDate.getTime())
-						.type(new String[] {getName()})
-						.build()
-				);
-
-			}
-
+			_ingestionLogicSender.send(
+				IngestionPayload
+					.builder()
+					.datasourceId(datasource.getDatasourceId())
+					.rawContent(id)
+					.contentId(id)
+					.tenantId(datasource.getTenantId())
+					.datasourcePayload(
+						_jsonFactory
+							.createObjectNode()
+							.set(getName(), data.toObjectNode())
+							.toMap()
+					)
+					.parsingDate(toDate.getTime())
+					.type(new String[] {getName()})
+					.build()
+			);
 		}
 
 		return Mono.empty();
@@ -93,7 +86,5 @@ public class ExamplePluginDriver implements PluginDriver {
 	private JsonFactory _jsonFactory;
 
 	private Config _config;
-
-
 
 }

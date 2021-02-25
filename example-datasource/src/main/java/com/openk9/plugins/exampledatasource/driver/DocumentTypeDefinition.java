@@ -13,7 +13,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
-import java.util.Map;
 
 
 @Component(
@@ -39,24 +38,13 @@ public class DocumentTypeDefinition implements
 						.searchKeywords(
 							List.of(
 								SearchKeyword.text("title", pluginDriverName),
-								SearchKeyword.boostText(
-									"applicationName", pluginDriverName, 10.0f),
-								SearchKeyword.text("URL", pluginDriverName),
-								SearchKeyword.text(
-									"description", pluginDriverName)
+								SearchKeyword.text("description", pluginDriverName)
 							)
 						)
 						.sourceFields(
 							List.of(
 								Field.of("title", FieldType.TEXT),
-								Field.of("applicationName", FieldType.TEXT),
-								Field.of("URL", FieldType.TEXT),
-								Field.of("description", FieldType.TEXT),
-								Field.of(
-									"icon",
-									FieldType.TEXT,
-									Map.of("index", false)
-								)
+								Field.of("description", FieldType.TEXT)
 							)
 						)
 						.build())
