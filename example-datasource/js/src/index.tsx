@@ -1,8 +1,11 @@
 import React from "react";
 import ClayIcon from "@clayui/icon";
-import { PluginInfo } from "@openk9/http-api";
+import { Plugin } from "@openk9/http-api";
 
-export const pluginInfo: PluginInfo = {
+import { ExampleResultCard } from "./ExampleResultCard";
+import { ExampleResultItem } from "./types";
+
+export const plugin: Plugin<ExampleResultItem> = {
   pluginId: "example-datasource",
   displayName: "Example DataSource",
   pluginType: ["DATASOURCE"],
@@ -12,10 +15,10 @@ export const pluginInfo: PluginInfo = {
   },
   dataSourceRenderingInterface: {
     resultRenderers: {
-      example: exampleResultRenderer,
+      example: ExampleResultCard as any,
     },
     sidebarRenderers: {
-      example: exampleSidebarRenderer,
+      example: exampleSidebarRenderer as any,
     },
   },
 };
@@ -30,15 +33,6 @@ function settingsRenderer(props: any) {
   return (
     <>
       <h1>Settings Panel</h1>
-    </>
-  );
-}
-
-function exampleResultRenderer(props: any) {
-  console.log("exampleResultRenderer", props);
-  return (
-    <>
-      <h1>It Works!</h1>
     </>
   );
 }

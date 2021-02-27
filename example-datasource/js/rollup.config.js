@@ -28,6 +28,8 @@ const externalGlobalsDefault = {
   react: "React",
   "@openk9/http-api": "ok9API",
   "@openk9/search-ui-components": "ok9Components",
+  "@clayui/icon": "clayIcon",
+  "react-jss": "reactJSS",
 };
 
 export default [
