@@ -23,7 +23,7 @@ import java.util.Date;
 public class ExamplePluginDriver implements PluginDriver {
 
 	@interface Config {
-		boolean schedulerEnabled() default false;
+		boolean schedulerEnabled() default true;
 	}
 
 	@Activate
