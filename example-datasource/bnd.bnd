@@ -5,8 +5,5 @@ Bundle-Version: 0.0.1
 
 -noimportjava: true
 
-Reactive-Web-ContextPath:  /plugins/example/build
-Reactive-Web-ContextPath-Folder: build
-
 OpenK9-Plugin: true
 OpenK9-Plugin-Web-Id: example-datasource
