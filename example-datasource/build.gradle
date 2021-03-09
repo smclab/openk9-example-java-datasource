@@ -24,7 +24,7 @@ repositories {
 }
 
 dependencies {
-	compile 'com.openk9:com.openk9.release.api:0.0.1'
+	compile 'com.openk9:com.openk9.release.api:latest.integration'
 }
 
 apply plugin: 'com.github.node-gradle.node'
