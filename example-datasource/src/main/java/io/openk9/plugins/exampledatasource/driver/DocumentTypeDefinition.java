@@ -1,14 +1,14 @@
-package com.openk9.plugins.exampledatasource.driver;
+package io.openk9.plugins.exampledatasource.driver;
 
-import com.openk9.ingestion.driver.manager.api.DocumentType;
-import com.openk9.ingestion.driver.manager.api.DocumentTypeFactory;
-import com.openk9.ingestion.driver.manager.api.DocumentTypeFactoryRegistry;
-import com.openk9.ingestion.driver.manager.api.DocumentTypeFactoryRegistryAware;
-import com.openk9.ingestion.driver.manager.api.PluginDriver;
-import com.openk9.ingestion.driver.manager.api.SearchKeyword;
-import com.openk9.osgi.util.AutoCloseables;
-import com.openk9.search.client.api.mapping.Field;
-import com.openk9.search.client.api.mapping.FieldType;
+import io.openk9.ingestion.driver.manager.api.DocumentType;
+import io.openk9.ingestion.driver.manager.api.DocumentTypeFactory;
+import io.openk9.ingestion.driver.manager.api.DocumentTypeFactoryRegistry;
+import io.openk9.ingestion.driver.manager.api.DocumentTypeFactoryRegistryAware;
+import io.openk9.ingestion.driver.manager.api.PluginDriver;
+import io.openk9.ingestion.driver.manager.api.SearchKeyword;
+import io.openk9.osgi.util.AutoCloseables;
+import io.openk9.search.client.api.mapping.Field;
+import io.openk9.search.client.api.mapping.FieldType;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -52,7 +52,7 @@ public class DocumentTypeDefinition implements
 	}
 
 	@Reference(
-		target = "(component.name=com.openk9.plugins.exampledatasource.driver.ExamplePluginDriver)"
+		target = "(component.name=io.openk9.plugins.exampledatasource.driver.ExamplePluginDriver)"
 	)
 	private PluginDriver _pluginDriver;
 

@@ -1,12 +1,11 @@
-package com.openk9.plugins.exampledatasource.driver;
+package io.openk9.plugins.exampledatasource.driver;
 
-import com.openk9.datasource.model.Datasource;
-import com.openk9.ingestion.driver.manager.api.PluginDriver;
-import com.openk9.ingestion.logic.api.IngestionLogic;
-import com.openk9.json.api.ArrayNode;
-import com.openk9.json.api.JsonFactory;
-import com.openk9.json.api.JsonNode;
-import com.openk9.model.IngestionPayload;
+import io.openk9.datasource.model.Datasource;
+import io.openk9.ingestion.driver.manager.api.PluginDriver;
+import io.openk9.ingestion.logic.api.IngestionLogic;
+import io.openk9.json.api.JsonFactory;
+import io.openk9.json.api.JsonNode;
+import io.openk9.model.IngestionPayload;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -45,32 +44,34 @@ public class ExamplePluginDriver implements PluginDriver {
 	public Publisher<Void> invokeDataParser(
 		Datasource datasource, Date fromDate, Date toDate) {
 
-		for (int i = 0; i < 5; i++) {
-			String id = "example-" + i;
-			JsonNode data = _jsonFactory.createObjectNode()
-							.put("title", "Item " + i)
-							.put("description", "This is a test, you are looking for item number " + i);
+		return Mono.fromRunnable(() -> {
 
-			_ingestionLogicSender.send(
-				IngestionPayload
-					.builder()
-					.datasourceId(datasource.getDatasourceId())
-					.rawContent(id)
-					.contentId(id)
-					.tenantId(datasource.getTenantId())
-					.datasourcePayload(
-						_jsonFactory
-							.createObjectNode()
-							.set(getName(), data.toObjectNode())
-							.toMap()
-					)
-					.parsingDate(toDate.getTime())
-					.type(new String[] {getName()})
-					.build()
-			);
-		}
+			for (int i = 0; i < 5; i++) {
+				String id = "example-" + i;
+				JsonNode data = _jsonFactory.createObjectNode()
+								.put("title", "Item " + i)
+								.put("description", "This is a test, you are looking for item number " + i);
 
-		return Mono.empty();
+				_ingestionLogicSender.send(
+					IngestionPayload
+						.builder()
+						.datasourceId(datasource.getDatasourceId())
+						.rawContent(id)
+						.contentId(id)
+						.tenantId(datasource.getTenantId())
+						.datasourcePayload(
+							_jsonFactory
+								.createObjectNode()
+								.set(getName(), data.toObjectNode())
+								.toMap()
+						)
+						.parsingDate(toDate.getTime())
+						.type(new String[] {getName()})
+						.build()
+				);
+			}
+
+		});
 
 	}
 

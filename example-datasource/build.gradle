@@ -24,7 +24,8 @@ repositories {
 }
 
 dependencies {
-	compile 'com.openk9:com.openk9.release.api:latest.integration'
+	compile group: 'io.openk9', name: 'io.openk9.release.api', version: '0.0.1-alpha-1'
+	compileOnly 'org.osgi:org.osgi.service.component.annotations:1.3.0'
 }
 
 apply plugin: 'com.github.node-gradle.node'

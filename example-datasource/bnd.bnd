@@ -1,5 +1,5 @@
 Bundle-Name: [OpenK9 - Plugin] Example DataSource
-Bundle-SymbolicName: com.openk9.plugins.exampledatasource
+Bundle-SymbolicName: io.openk9.plugins.exampledatasource
 
 Bundle-Version: 0.0.1
 
